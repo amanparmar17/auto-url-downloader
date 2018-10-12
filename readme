@@ -1,0 +1,16 @@
+auto-url-downloader
+
+a python script developed to download multiple number of images or gifs or videos, basically anything, from their given urls(stored in a text file) just in one go.
+
+key features:
+
+can download a number of urls in one execution
+can work on multiple files of urls in on execution
+traces all the text files and read all one by one to download their urls
+store the photos in a single folder formed by the name same as the name of the file currently in use.
+
+how to use:
+
+store all the different files(txt files) containing urls in a separate folder.
+store the python script in the same folder as well
+execute the script from the folder.
