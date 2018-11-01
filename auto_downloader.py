@@ -16,7 +16,8 @@ def listing(extension):
     y=[]
     s=extension
     for i in x:
-        if s in i:
+        i=i.split('.')[-1]
+        if s==i:
             y.append(i)
     return y
 
@@ -51,8 +52,9 @@ def down(content):
     
 #%%
 #def download(file):
-def loop_download(ls_file,extension,ls_col_name=[]):
+def loop_download(ls_file,extension):
     if extension=='csv':
+        ls_col_name=enter(ls_file)
         ls=dict(zip(ls_file,ls_col_name))
         download_csv(ls)
     elif extension=='txt':
@@ -65,37 +67,35 @@ def loop_download(ls_file,extension,ls_col_name=[]):
             change_dir(name)
             down(content)
             cd()
-        print('\n\n Completed!!')
-            
-    
-    
-    
-    
+        print('\n\n COMPLETED!!')
 
 #%%
 def download(extension):
-    print('Do you want to download all the files with {0} extension [Y/N]: ',end='')
+    print('Do you want to download all the files with {0} extension [Y/N]: '.format(extension),end='')
     a=input()
     if a=='Y' or a=='y':
         ls=listing(extension) 
-        print('The files to be downloaded are:')
-        for i in ls:
-            print(i)
-        download_all(ls,extension)
+        if len(ls)==0:
+            print('Sorry there are no files with the given extension')
+        else:
+            print('The files to be downloaded are:')
+            for i in ls:
+                print(i)
+            download_all(ls,extension)
 
 
 
 def download_all(ls,extension):
     print('Creating new folders in the location: {0}'.format(current_dir))
-    b=input('Please confirm the location [Y/N]: ')
-    if b=='Y' or b=='y':
-        loop_download(ls,extension)
-    elif b=='N' or b=='n':
-        location=input('Please enter the complete location: ')
-        change_dir(location)
-        loop_download(ls,extension)
-    else:
-        print('Sorry, Unable to understand your decision')
+#    b=input('Please confirm the location [Y/N]: ')
+#    if b=='Y' or b=='y':
+    loop_download(ls,extension)
+#    elif b=='N' or b=='n':
+#        location=input('Please enter the complete location: ')
+#        change_dir(location)
+#        loop_download(ls,extension)
+#    else:
+#        print('Sorry, Unable to understand your decision')
                 
                 
 #%%
@@ -110,26 +110,36 @@ def download_csv(ls):
     """Download the urls present in the column with the specified column name"""
     try:
         for i in ls:
+            name=create_dir(i+'1')
+            print('Creating the {0} folder\n'.format(name))
+            print('Accessing the file {0}\n\n'.format(i))
             dataset=pa.read_csv(i)
             try:
                 dataset=dataset[ls[i]]
                 down(dataset)
             except KeyError:
                 print('Specified column does not exist')
+            change_dir(name)
+            down(dataset)
+            cd()
+        print('\n\n COMPLETED!!')      
     except FileNotFoundError:
         print('No file found in the directory')
         print('Please check the location of the file and try again')
     
-#%%
-
-
-
-
-
-
-
         #%%
-            
+#enter the column names
+        
+def enter(ls):
+    print('Please enter the name of the columns containing the urls')
+    l=[]
+    for i in ls:
+        a=input(i+' : ')
+        l.append(a)
+    return l
+
+
+#%%            
             
             
 #            select the to-be-downloaded data on the basis of extension(jpg,jpeg,JPG,JPEG,png,PNG)
