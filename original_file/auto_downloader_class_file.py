@@ -1,6 +1,5 @@
 import os
 import sys
-import xlrd
 import random
 import requests
 import pandas as pa
@@ -139,17 +138,17 @@ def enter(ls):
 class Download_urls:
     
     def download(self,extension):
-        print('Do you want to download all the files with {0} extension [Y/N]: '.format(extension),end='')
-        a=input()
-        if a=='Y' or a=='y':
-            ls=listing(extension) 
-            if len(ls)==0:
-                print('Sorry there are no files with the given extension')
-            else:
-                print('The files to be downloaded are:')
-                for i in ls:
-                    print(i)
-                download_all(ls,extension)
+    print('Do you want to download all the files with {0} extension [Y/N]: '.format(extension),end='')
+    a=input()
+    if a=='Y' or a=='y':
+        ls=listing(extension) 
+        if len(ls)==0:
+            print('Sorry there are no files with the given extension')
+        else:
+            print('The files to be downloaded are:')
+            for i in ls:
+                print(i)
+            download_all(ls,extension)
             
     def download_all(self,ls,extension):
         print('Creating new folders in the location: {0}'.format(current_dir))
